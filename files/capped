@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# capped — メモリの上限をかけて、命令を動かす。
+#   capped 8 python3 train.py      ← 8GB の上限をかけて python3 train.py を動かす
+# 上限を超えたら、OS がこの命令だけを止める(パソコン全体は守られる)。
+# systemd-run が使えない環境(systemd が無効の WSL など)では、理由を出して止まる(手引きの付録C)。
+# 外部と通信しない。
+set -u
+if [ $# -lt 2 ]; then
+  echo "使い方: capped <上限GB> <命令...>   例: capped 8 python3 train.py" >&2
+  exit 2
+fi
+gb="$1"; shift
+case "$gb" in ''|*[!0-9]*) echo "上限は数字(GB)で書く: $gb" >&2; exit 2;; esac
+if ! systemd-run --user --scope --quiet -p MemoryMax=1G true 2>/dev/null; then
+  echo "この環境では systemd-run --user が使えないので、上限をかけられない。手引きの付録C(WSL)を見ること" >&2
+  exit 3
+fi
+exec systemd-run --user --scope --quiet -p MemoryMax="${gb}G" -p MemorySwapMax=0 "$@"
