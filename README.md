@@ -42,8 +42,8 @@ python3 ~/ai-guard/tests/test_all.py
 
 使い方(なぜその部品が要るのか、Claude Code にどう守らせるか、効いているかの確かめ方、初心者向けの準備の手順)は、作者の note の手引きにまとめています。
 
-- 手引き: 【公開後にリンクを入れる】
-- 無料の連載「AIに長い仕事を任せた記録」: 【公開後にリンクを入れる】
+- 手引き: https://note.com/miokuri_ai/n/n4a01438ebd90
+- 無料の連載「AIに長い仕事を任せたら」(第1回): https://note.com/miokuri_ai/n/nefa1bd997b0f
 
 ## 利用条件
 
